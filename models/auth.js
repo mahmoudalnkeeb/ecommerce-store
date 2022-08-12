@@ -13,12 +13,14 @@ module.exports = class Auth {
   async loginWithEmail(email) {
     let sql = 'SELECT firstname , lastname FROM users WHERE email=$1';
     let res = await this.pool.query(sql, [email]);
+    if (!res.rows.length) return;
     let data = res.rows[0];
-    return data;
+    return data.hashed_pass;
   }
   async getPassByUsername(username) {
     let sql = 'SELECT hashed_pass FROM users WHERE username=$1';
     let res = await this.pool.query(sql, [username]);
+    if (!res.rows.length) return;
     let data = res.rows[0];
     return data.hashed_pass;
   }
