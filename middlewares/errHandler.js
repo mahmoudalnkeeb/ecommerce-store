@@ -17,7 +17,7 @@ module.exports = function errHandler(err, req, res, next) {
       code = err.status;
       break;
   }
-
+  console.log(err);
   res.status(code || 500);
   res.json({
     error,

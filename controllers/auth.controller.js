@@ -14,25 +14,28 @@ const tokens = new Token(jwt, jwtSecret);
 class AuthController {
   async login(req, res, next) {
     try {
-      let { username, email, password } = req.body;
-      console.log(req.body);
-      if (email == undefined) {
-        let hashedPass = await auths.getPassByUsername(username);
+      const uRegex = RegExp(
+        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      );
+      let { u, password } = req.body;
 
+      if (!uRegex.test(u)) {
+        let hashedPass = await auths.getPassByUsername(u);
+        console.log(hash.compareHash(password, hashedPass));
         if (!hash.compareHash(password, hashedPass))
           return res.status(400).json({ msg: 'Wrong username or password' });
 
-        let user = await auths.loginWithUsername(username); // {firstname , lastname}
+        let user = await auths.loginWithUsername(u); // {firstname , lastname}
 
         // here goes Jwt method
         let token = tokens.createToken(user);
         return res.status(200).json({ token });
       }
-      let hashedPass = await auths.getPassByEmail(email);
+      let hashedPass = await auths.getPassByEmail(u);
       if (!hash.compareHash(password, hashedPass))
         return res.status(400).json({ msg: 'Wrong email or password' });
 
-      let user = await auths.loginWithEmail(email); // {firstname , lastname}
+      let user = await auths.loginWithEmail(u); // {firstname , lastname}
 
       // here goes Jwt method
       let token = tokens.createToken(user);
@@ -61,7 +64,7 @@ class AuthController {
       next(error);
     }
   }
-  checkIsAuth(req, res , next) {
+  checkIsAuth(req, res, next) {
     try {
       let { token } = req.body;
       let checkToken = tokens.checkToken(token);
@@ -69,7 +72,7 @@ class AuthController {
       let user = tokens.decodeToken(token);
       res.status(200).json({ isAuth: true, user });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 }
