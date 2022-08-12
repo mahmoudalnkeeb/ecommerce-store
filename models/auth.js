@@ -14,7 +14,7 @@ module.exports = class Auth {
     let sql = 'SELECT firstname , lastname FROM users WHERE email=$1';
     let res = await this.pool.query(sql, [email]);
     let data = res.rows[0];
-    return data.hashed_pass;
+    return data;
   }
   async getPassByUsername(username) {
     console.log({ username });

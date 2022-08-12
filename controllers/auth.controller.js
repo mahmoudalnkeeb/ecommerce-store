@@ -21,8 +21,7 @@ class AuthController {
 
       if (!uRegex.test(u)) {
         let hashedPass = await auths.getPassByUsername(u);
-        if (!hashedPass)
-          return res.status(400).json({ msg: 'Wrong username' });
+        if (!hashedPass) return res.status(400).json({ msg: 'Wrong username' });
         if (!hash.compareHash(password, hashedPass))
           return res.status(400).json({ msg: 'Wrong username or password' });
 
@@ -33,13 +32,12 @@ class AuthController {
         return res.status(200).json({ token });
       }
       let hashedPass = await auths.getPassByEmail(u);
-      if (!hashedPass)
-        return res.status(400).json({ msg: 'Wrong email' });
+      if (!hashedPass) return res.status(400).json({ msg: 'Wrong email' });
       if (!hash.compareHash(password, hashedPass))
         return res.status(400).json({ msg: 'Wrong email or password' });
 
       let user = await auths.loginWithEmail(u); // {firstname , lastname}
-
+      console.log(user);
       // here goes Jwt method
       let token = tokens.createToken(user);
       res.status(201).json({ token });
