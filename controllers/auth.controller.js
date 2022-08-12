@@ -18,10 +18,11 @@ class AuthController {
         /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
       );
       let { u, password } = req.body;
-      
+
       if (!uRegex.test(u)) {
         let hashedPass = await auths.getPassByUsername(u);
-        console.log(hash.compareHash(password, hashedPass));
+        if (!hashedPass)
+          return res.status(400).json({ msg: 'Wrong username or password' });
         if (!hash.compareHash(password, hashedPass))
           return res.status(400).json({ msg: 'Wrong username or password' });
 
@@ -32,6 +33,8 @@ class AuthController {
         return res.status(200).json({ token });
       }
       let hashedPass = await auths.getPassByEmail(u);
+      if (!hashedPass)
+        return res.status(400).json({ msg: 'Wrong email or password' });
       if (!hash.compareHash(password, hashedPass))
         return res.status(400).json({ msg: 'Wrong email or password' });
 

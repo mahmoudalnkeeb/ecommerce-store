@@ -17,20 +17,20 @@ module.exports = class Auth {
     return data.hashed_pass;
   }
   async getPassByUsername(username) {
-    console.log({username});
+    console.log({ username });
     let sql = 'SELECT hashed_pass FROM users WHERE username=$1';
     let res = await this.pool.query(sql, [username]);
-    if (!res.rows.length) return '';
     let data = res.rows[0];
-    return data.hashed_pass;
+    if (data) return data.hashed_pass;
+    return false;
   }
   async getPassByEmail(email) {
-    console.log({email});
+    console.log({ email });
     let sql = 'SELECT hashed_pass FROM users WHERE email=$1';
     let res = await this.pool.query(sql, [email]);
-    if (!res.rows.length) return '';
     let data = res.rows[0];
-    return data.hashed_pass;
+    if (data) return data.hashed_pass;
+    return false;
   }
 
   async signup({ firstname, lastname, username, email, password, avatar }) {
