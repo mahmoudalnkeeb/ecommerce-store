@@ -1,0 +1,8 @@
+TODO:
+[ ] design database structure
+[ ] setup environment variables
+[ ] setup migration files
+[ ] setup models
+[ ] setup routes
+[ ] setup controllers
+[ ] write tests
