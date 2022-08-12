@@ -1,13 +1,14 @@
+const { saltRounds, jwtSecret } = require('../configs/env');
 const bcrypt = require('bcrypt');
 const pool = require('../configs/db');
 const Auth = require('../models/auth');
 const Hash = require('../utils/bcrypt');
 const jwt = require('jsonwebtoken');
 const Token = require('../utils/jwt');
-const { saltRounds, jwtSecret } = require('../configs/env');
+const salt = bcrypt.genSaltSync(saltRounds);
 // create instances
 const auths = new Auth(pool);
-const hash = new Hash(bcrypt, saltRounds);
+const hash = new Hash(bcrypt, saltRounds, salt);
 const tokens = new Token(jwt, jwtSecret);
 
 // auth controller class
