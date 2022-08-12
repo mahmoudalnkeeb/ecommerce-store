@@ -18,7 +18,7 @@ class AuthController {
         /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
       );
       let { u, password } = req.body;
-
+      
       if (!uRegex.test(u)) {
         let hashedPass = await auths.getPassByUsername(u);
         console.log(hash.compareHash(password, hashedPass));
