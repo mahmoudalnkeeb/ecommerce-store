@@ -9,7 +9,6 @@ let pool = new Pool({
   port,
   database,
   max: 20,
-  ssl: { rejectUnauthorized: false },
 });
 
 module.exports = pool;
