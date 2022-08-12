@@ -22,7 +22,7 @@ class AuthController {
       if (!uRegex.test(u)) {
         let hashedPass = await auths.getPassByUsername(u);
         if (!hashedPass)
-          return res.status(400).json({ msg: 'Wrong username or password' });
+          return res.status(400).json({ msg: 'Wrong username' });
         if (!hash.compareHash(password, hashedPass))
           return res.status(400).json({ msg: 'Wrong username or password' });
 
@@ -34,7 +34,7 @@ class AuthController {
       }
       let hashedPass = await auths.getPassByEmail(u);
       if (!hashedPass)
-        return res.status(400).json({ msg: 'Wrong email or password' });
+        return res.status(400).json({ msg: 'Wrong email' });
       if (!hash.compareHash(password, hashedPass))
         return res.status(400).json({ msg: 'Wrong email or password' });
 
