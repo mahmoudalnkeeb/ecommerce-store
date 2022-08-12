@@ -5,7 +5,7 @@ const Auth = require('../models/auth');
 const Hash = require('../utils/bcrypt');
 const jwt = require('jsonwebtoken');
 const Token = require('../utils/jwt');
-const salt = bcrypt.genSaltSync(saltRounds);
+const salt = bcrypt.genSaltSync(+saltRounds);
 // create instances
 const auths = new Auth(pool);
 const hash = new Hash(bcrypt, saltRounds, salt);
