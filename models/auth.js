@@ -5,13 +5,13 @@ module.exports = class Auth {
     this.pool = pool;
   }
   async loginWithUsername(username) {
-    let sql = 'SELECT firstname , lastname FROM users WHERE username=$1';
+    let sql = 'SELECT user_id FROM users WHERE username=$1';
     let res = await this.pool.query(sql, [username]);
     let data = res.rows[0];
     return data;
   }
   async loginWithEmail(email) {
-    let sql = 'SELECT firstname , lastname FROM users WHERE email=$1';
+    let sql = 'SELECT user_id FROM users WHERE email=$1';
     let res = await this.pool.query(sql, [email]);
     let data = res.rows[0];
     return data;
@@ -35,7 +35,7 @@ module.exports = class Auth {
 
   async signup({ firstname, lastname, username, email, password, avatar }) {
     let sql =
-      'INSERT INTO users(firstname, lastname, username, email, hashed_pass , avatar) VALUES($1 , $2 , $3 , $4 , $5 , $6) RETURNING firstname , lastname ';
+      'INSERT INTO users(firstname, lastname, username, email, hashed_pass , avatar) VALUES($1 , $2 , $3 , $4 , $5 , $6) RETURNING user_id ';
     let res = await this.pool.query(sql, [
       firstname,
       lastname,

@@ -4,7 +4,10 @@ module.exports = class Token {
     this.jwtSecret = jwtSecret;
   }
   createToken(payload) {
-    return this.jwt.sign(payload, this.jwtSecret);
+    return this.jwt.sign(payload, this.jwtSecret, {
+      expiresIn: '24h',
+      algorithm: 'RS256',
+    });
   }
   checkToken(token) {
     return this.jwt.verify(token, this.jwtSecret);

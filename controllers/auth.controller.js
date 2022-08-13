@@ -30,7 +30,11 @@ class AuthController {
 
         // here goes Jwt method
         let token = tokens.createToken(user);
-        return res.status(200).json({ token });
+        let oneDay = 1000 * 60 * 60 * 24;
+        return res
+          .status(201)
+          .cookie('auth', token, { maxAge: oneDay })
+          .json({ token });
       }
       let hashedPass = await auths.getPassByEmail(u);
       if (!hashedPass) return res.status(400).json({ msg: 'Wrong email' });
@@ -38,10 +42,13 @@ class AuthController {
         return res.status(400).json({ msg: 'Wrong email or password' });
 
       let user = await auths.loginWithEmail(u); // {firstname , lastname}
-      console.log(user);
       // here goes Jwt method
       let token = tokens.createToken(user);
-      res.status(201).json({ token });
+      let oneDay = 1000 * 60 * 60 * 24;
+      return res
+        .status(201)
+        .cookie('auth', token, { maxAge: oneDay })
+        .json({ token });
     } catch (error) {
       next(error);
     }
@@ -59,9 +66,13 @@ class AuthController {
         password,
         avatar,
       });
-      console.log(user);
+
       let token = tokens.createToken(user);
-      return res.status(201).json({ token });
+      let oneDay = 1000 * 60 * 60 * 24;
+      return res
+        .status(201)
+        .cookie('auth', token, { maxAge: oneDay })
+        .json({ token });
     } catch (error) {
       next(error);
     }

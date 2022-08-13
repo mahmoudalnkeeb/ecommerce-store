@@ -1,8 +1,9 @@
-const express = require('express');
-const { port } = require('../configs/env');
-const router = express.Router();
+const router = require('express').Router();
+const checkDev = require('../middlewares/checkDev');
 const authRouter = require('./auth');
+const devRouter = require('./dev_routes');
 
+// views routes
 router.get('/', (req, res) => {
   res.send(
     `<p style="font-family:monospace;font-size : 2.5em ;">
@@ -19,5 +20,9 @@ router.get('/docs', (req, res) => {
     header: 'documentation',
   });
 });
+
+// Restapi Routes
 router.use('/', authRouter);
+router.use('/dev', checkDev, devRouter);
+
 module.exports = router;

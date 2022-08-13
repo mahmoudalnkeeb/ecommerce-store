@@ -6,6 +6,11 @@ module.exports = function errHandler(err, req, res, next) {
   // render the error page
   let error, inputs, code;
 
+  if (err.status == 404)
+    return res.json({
+      err: err.message,
+      code: err.status,
+    });
   switch (err.code) {
     case '23505':
       error = 'some data you entered is invalid';

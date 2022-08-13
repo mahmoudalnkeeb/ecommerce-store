@@ -5,4 +5,5 @@ module.exports = env = {
   saltRounds: process.env.SALT_ROUNDS,
   dbUrl: process.env.DATABASE_URL,
   jwtSecret: process.env.JWT_SECRET,
+  devSecret: process.env.DEV_SECRET,
 };
