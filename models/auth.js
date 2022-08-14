@@ -1,8 +1,8 @@
-const { saltRounds } = require('../configs/env');
+const { SALT_ROUNDS } = require('../configs/env');
 const bcrypt = require('bcrypt');
-const salt = bcrypt.genSaltSync(+saltRounds);
+const salt = bcrypt.genSaltSync(+SALT_ROUNDS);
 const Hash = require('../utils/bcrypt');
-const hash = new Hash(bcrypt, saltRounds, salt);
+const hash = new Hash(bcrypt, SALT_ROUNDS, salt);
 
 module.exports = class Auth {
   constructor(pool) {

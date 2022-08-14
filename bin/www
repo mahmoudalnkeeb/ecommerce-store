@@ -7,13 +7,13 @@
 const app = require('../app');
 const debug = require('debug')('e-commerce:server');
 const http = require('http');
-const env = require('../configs/env');
+const {PORT} = require('../configs/env');
 
 /**
  * Get port from environment and store in Express.
  */
 
-let port = normalizePort(env.port || '3000');
+let port = normalizePort(PORT);
 app.set('port', port);
 
 /**

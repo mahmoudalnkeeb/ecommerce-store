@@ -1,12 +1,11 @@
-const { saltRounds, jwtSecret } = require('../configs/env');
-const bcrypt = require('bcrypt');
+const { JWT_SECRET } = require('../configs/env');
 const pool = require('../configs/db');
 const Auth = require('../models/auth');
 const jwt = require('jsonwebtoken');
 const Token = require('../utils/jwt');
 // create instances
 const auths = new Auth(pool);
-const tokens = new Token(jwt, jwtSecret);
+const tokens = new Token(jwt, JWT_SECRET);
 
 // auth controller class
 class AuthController {

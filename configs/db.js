@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 const { parse } = require('pg-connection-string');
-const { dbUrl } = require('./env');
-let { user, password, host, port, database } = parse(dbUrl);
+const { DB_URL } = require('./env');
+let { user, password, host, port, database } = parse(DB_URL);
 let pool = new Pool({
   user,
   password,
