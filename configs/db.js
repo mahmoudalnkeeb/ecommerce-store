@@ -10,5 +10,4 @@ let pool = new Pool({
   database,
   max: 20,
 });
-
 module.exports = pool;

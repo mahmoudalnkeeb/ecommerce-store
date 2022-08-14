@@ -10,56 +10,91 @@ module.exports = class Auth {
   }
 
   async loginWithUsername(username) {
-    let sql = 'SELECT user_id FROM users WHERE username=$1';
-    let res = await this.pool.query(sql, [username]);
-    let data = res.rows[0];
-    return data;
+    const client = await this.pool.connect();
+    try {
+      let sql = 'SELECT user_id FROM users WHERE username=$1';
+      let res = await client.query(sql, [username]);
+      let data = res.rows[0];
+      return data;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
   }
 
   async loginWithEmail(email) {
-    let sql = 'SELECT user_id FROM users WHERE email=$1';
-    let res = await this.pool.query(sql, [email]);
-    let data = res.rows[0];
-    return data;
+    const client = await this.pool.connect();
+    try {
+      let sql = 'SELECT user_id FROM users WHERE email=$1';
+      let res = await client.query(sql, [email]);
+      let data = res.rows[0];
+      return data;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
   }
 
   async checkPassByUsername(username, password) {
-    let sql = 'SELECT hashed_pass FROM users WHERE username=$1';
-    let res = await this.pool.query(sql, [username]);
-    let data = res.rows[0];
-    if (data) {
-      let hashedPass = data.hashed_pass;
-      if (!hash.compareHash(password, hashedPass)) return false;
-      return true;
+    const client = await this.pool.connect();
+    try {
+      let sql = 'SELECT hashed_pass FROM users WHERE username=$1';
+      let res = await client.query(sql, [username]);
+      let data = res.rows[0];
+      if (data) {
+        let hashedPass = data.hashed_pass;
+        if (!hash.compareHash(password, hashedPass)) return false;
+        return true;
+      }
+      return false;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
     }
-    return false;
   }
 
   async checkPassByEmail(email, password) {
-    let sql = 'SELECT hashed_pass FROM users WHERE email=$1';
-    let res = await this.pool.query(sql, [email]);
-    let data = res.rows[0];
-    if (data) {
-      let hashedPass = data.hashed_pass;
-      if (!hash.compareHash(password, hashedPass)) return false;
-      return true;
+    const client = await this.pool.connect();
+    try {
+      let sql = 'SELECT hashed_pass FROM users WHERE email=$1';
+      let res = await client.query(sql, [email]);
+      let data = res.rows[0];
+      if (data) {
+        let hashedPass = data.hashed_pass;
+        if (!hash.compareHash(password, hashedPass)) return false;
+        return true;
+      }
+      return false;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
     }
-    return false;
   }
 
   async signup({ firstname, lastname, username, email, password, avatar }) {
-    let sql =
-      'INSERT INTO users(firstname, lastname, username, email, hashed_pass , avatar) VALUES($1 , $2 , $3 , $4 , $5 , $6) RETURNING user_id ';
-    let hashed_pass = hash.createHash(password);
-    let res = await this.pool.query(sql, [
-      firstname,
-      lastname,
-      username,
-      email,
-      hashed_pass,
-      avatar,
-    ]);
-    let data = res.rows[0];
-    return data;
+    const client = await this.pool.connect();
+    try {
+      let sql =
+        'INSERT INTO users(firstname, lastname, username, email, hashed_pass , avatar) VALUES($1 , $2 , $3 , $4 , $5 , $6) RETURNING user_id ';
+      let hashed_pass = hash.createHash(password);
+      let res = await client.query(sql, [
+        firstname,
+        lastname,
+        username,
+        email,
+        hashed_pass,
+        avatar,
+      ]);
+      let data = res.rows[0];
+      return data;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
   }
 };
