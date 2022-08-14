@@ -1,3 +1,4 @@
+const { saltRounds } = require('../configs/env');
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(+saltRounds);
 const Hash = require('../utils/bcrypt');
