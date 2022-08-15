@@ -6,13 +6,12 @@ module.exports = class Token {
   createToken(payload) {
     return this.jwt.sign(payload, this.jwtSecret, {
       expiresIn: '24h',
-      algorithm: 'RS256',
     });
   }
   checkToken(token) {
     return this.jwt.verify(token, this.jwtSecret);
   }
   decodeToken(token) {
-    return this.jwt.decode;
+    return this.jwt.decode(token);
   }
 };

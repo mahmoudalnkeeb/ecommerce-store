@@ -6,7 +6,7 @@ const testAuth = new Auth(pool);
 let testUsername;
 let testEmail;
 describe('test auth model', () => {
-  test('signup method should return object contains user_id', async () => {
+  it('signup method should return object contains user_id', async () => {
     const testUser = {
       firstname: 'fnTest',
       lastname: 'lnTest',
@@ -17,14 +17,13 @@ describe('test auth model', () => {
     };
     testUsername = testUser.username;
     testEmail = testUser.email;
-    expect(await testAuth.signup(testUser)).toHaveProperty('user_id');
+    const user = await testAuth.signup(testUser);
+    expect(user).toHaveProperty('user_id');
   });
-  test('login with username method should return object contains user_id', async () => {
-    expect(await testAuth.loginWithEmail(testEmail)).toHaveProperty(
-      'user_id'
-    );
+  it('login with username method should return object contains user_id', async () => {
+    expect(await testAuth.loginWithEmail(testEmail)).toHaveProperty('user_id');
   });
-  test('login with email method should return object contains user_id', async () => {
+  it('login with email method should return object contains user_id', async () => {
     expect(await testAuth.loginWithUsername(testUsername)).toHaveProperty(
       'user_id'
     );

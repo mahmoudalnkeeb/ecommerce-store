@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "start-dev": "nodemon ./bin/www",
-    "test": "jest"
+    "start-dev": "set ENV=dev&& nodemon ./bin/www",
+    "test": "set ENV=dev&& jest"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.19",
+    "supertest": "^6.2.4",
     "ts-node": "^10.9.1"
   }
 }

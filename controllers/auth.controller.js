@@ -13,20 +13,19 @@ class AuthController {
     try {
       let { u, password } = req.body;
       if (!req.isEmail) {
-        let isReal = await auths.checkPassByUsername();
+        let isReal = await auths.checkPassByUsername(u, password);
         if (!isReal)
           return res.status(400).json({ msg: 'Wrong username or password' });
-
         let user = await auths.loginWithUsername(u);
 
         // here goes Jwt method
         let token = tokens.createToken(user);
         let oneDay = 1000 * 60 * 60 * 24;
-
+        let access_token = await auths.updateToken(token);
         return res
-          .status(201)
-          .cookie('auth', token, { maxAge: oneDay })
-          .json({ token });
+          .status(200)
+          .cookie('auth', access_token, { maxAge: oneDay })
+          .json({ access_token });
       }
       let isReal = await auths.checkPassByEmail(u, password);
       if (!isReal)
@@ -37,11 +36,11 @@ class AuthController {
       // here goes Jwt method
       let token = tokens.createToken(user);
       let oneDay = 1000 * 60 * 60 * 24;
-
+      let access_token = await auths.updateToken(token);
       return res
-        .status(201)
-        .cookie('auth', token, { maxAge: oneDay })
-        .json({ token });
+        .status(200)
+        .cookie('auth', access_token, { maxAge: oneDay })
+        .json({ access_token });
     } catch (error) {
       next(error);
     }
@@ -60,22 +59,25 @@ class AuthController {
       });
 
       let token = tokens.createToken(user);
+      let access_token = await auths.updateToken(token);
       let oneDay = 1000 * 60 * 60 * 24;
       return res
         .status(201)
-        .cookie('auth', token, { maxAge: oneDay })
-        .json({ token });
+        .cookie('auth', access_token, { maxAge: oneDay })
+        .json({ msg: 'account created successfully', access_token });
     } catch (error) {
       next(error);
     }
   }
-  checkIsAuth(req, res, next) {
+  async checkIsAuth(req, res, next) {
     try {
       let { token } = req.body;
-      let checkToken = tokens.checkToken(token);
-      if (!checkToken) return res.status(401).json({ isAuth: false });
+      let realToken = tokens.checkToken(token);
+      if (!realToken) return res.status(401).json({ isAuth: false });
       let user = tokens.decodeToken(token);
-      res.status(200).json({ isAuth: true, user });
+      let checkAccessToken = (await auths.getToken(user.user_id)) === token;
+      if (checkAccessToken) return res.status(200).json({ isAuth: true, user });
+      res.status(401).json({ isAuth: false });
     } catch (error) {
       next(error);
     }

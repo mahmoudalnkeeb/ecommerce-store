@@ -2,12 +2,12 @@ module.exports = {
   validateSignup(req, res, next) {
     let invalid = [];
     let nulls = [];
-    const { firstname, lastname, username, email, password, avatar } = req.body;
+    let { firstname, lastname, username, email, password, avatar } = req.body;
     if (!firstname) nulls.push('firstname');
     if (!lastname) nulls.push('firstname');
     if (!username) nulls.push('firstname');
     if (!password) nulls.push('firstname');
-    if (!checkPass(password)) invalid.push('firstname');
+    if (!checkPass(password)) invalid.push('password');
     if (email) {
       if (!checkEmail(email)) invalid.push('email');
     }
@@ -26,10 +26,10 @@ module.exports = {
     next();
   },
   validateLogin(req, res, next) {
-    const { u, password } = req.body;
+    const { u } = req.body;
     if (!checkEmail(u)) {
       req.isEmail = false;
-      next();
+      return next();
     }
     req.isEmail = true;
     next();
@@ -44,7 +44,7 @@ function checkEmail(email) {
   return true;
 }
 function checkPass(pass) {
-  const passReg = RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/);
+  const passReg = RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/);
   if (!passReg.test(pass)) return false;
   return true;
 }

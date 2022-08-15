@@ -1,15 +1,18 @@
 class Hash {
-  constructor(bcrypt, saltRounds, salt) {
+  constructor(bcrypt, saltRounds) {
     this.bcrypt = bcrypt;
     this.saltRounds = parseInt(saltRounds);
-    this.salt = salt;
   }
-  createHash(password) {
-    return this.bcrypt.hashSync(password + this.salt, this.saltRounds);
+  createHash(password, salt) {
+    return this.bcrypt.hashSync(password + salt, this.saltRounds);
   }
 
-  compareHash(password, hash) {
-    return this.bcrypt.compareSync(password + this.salt, hash);
+  compareHash(password, hash, salt) {
+    console.log(this.salt);
+    return this.bcrypt.compareSync(password + salt, hash);
+  }
+  genSalt() {
+    return this.bcrypt.genSaltSync(this.saltRounds);
   }
 }
 
