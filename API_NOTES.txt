@@ -1,4 +1,6 @@
 
+* users *
+
 - signup -
 
 endpoint = '/signup'
@@ -67,3 +69,7 @@ response_onSuccess = {
         "exp": 1660656278 [token expiry date]
     }
 }
+
+
+* products * 
+
