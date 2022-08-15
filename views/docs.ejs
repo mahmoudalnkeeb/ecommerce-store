@@ -1,20 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-  </head>
-  <body style="font-family: monospace; font-size: 18px;">
-    <h1 style="font-size: 2.5em"> <%= header %> </h1>
-    <br>
-    <h2>
-        what is ..... ?
-    </h2>
-
-    <p style="font-size :1.3em;">
-        ..... is an easy customizable e-commerce website , high quality code , with technical support 24/7 
-    </p> 
-  </body>
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="./stylesheets/style.css">
+      <title>
+         <%= title %>
+      </title>
+   </head>
+   <h1 id="users">users</h1>
+   <ul>
+      <li>
+         <p><a href="#signup">signup</a></p>
+      </li>
+      <li>
+         <p><a href="#login">login</a></p>
+      </li>
+      <li>
+         <p><a href="#auth-with-access-token">auth</a></p>
+      </li>
+   </ul>
+   <h2 id="signup">signup</h2>
+   <p>endpoint = &#39;/signup&#39;.</p>
+   <p>method = &#39;POST&#39;.</p>
+   <pre>
+    <code>    
+      request_body = {
+          "firstname" : "string",     [required]
+          "lastname" : "string",      [required]
+          "username" : "string",      [required]
+          "password" : "string",      [required]
+          "email" : "string", =&gt;      [not required] can be added later
+          "avatar" : "string" (url)   [not required] if not supplied it become "defaul:avatar"
+          }
+  
+      response_onSuccess = {
+      "message":"account created successfully",
+      "token":"string" [user's access_token]
+      }
+  
+      response_onValidationFail = {
+      "nulls":[], =&gt; contains empty fields
+      "invalid":[], =&gt; contains invalid inputs like email or password
+      }
+  
+  
+      response_onUsedUsernameFail ={
+      "error": "some data you entered is invalid",
+      "inputs": "string" [invalid input name]
+      }
+  </code>
+</pre>
+   <h2 id="login">login</h2>
+   <p>endpoint = &#39;/login&#39;</p>
+   <p>method = &#39;POST&#39;</p>
+   <pre>
+    <code>    
+      request_body = {
+      "u": "string", [required] =&gt; could be eamil or username
+      "password" : "string", [required]
+      }
+  
+      response_onSuccess = {
+      "token":"string" [user's access_token]
+      }
+  
+      response_onValidationFail = {
+      "nulls":[], =&gt; contains empty fields
+      "invalid":[], =&gt; contains invalid inputs like email or password
+      }
+  
+      response_onWrongData = {
+      "msg":'Wrong username or password'
+      }
+  </code></pre>
+   <p class="note">[NOTE] : password should be minimum 8 characters 1 letter and 1 special character at least.</p>
+   <h2 id="auth-with-access-token">auth with access token</h2>
+   <p>endpoint = &#39;/auth&#39;</p>
+   <p>method = &#39;POST&#39;</p>
+   <pre>
+    <code>    
+    request_body = {
+       token:"access_token goes here"
+      }
+  
+    response_onSuccess = {
+      "isAuth":true,
+      "user" :{
+      "user_id": 1, [user_id]
+      "iat": 1660569878, [iniated at for token]
+      "exp": 1660656278 [token expiry date]
+          }
+      }
+  
+    response_onFail = {
+      "isAuth":false,
+      }
+  </code>
+</pre>
+   <h1 id="products">products</h1>
+   </body>
 </html>
