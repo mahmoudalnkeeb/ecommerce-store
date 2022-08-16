@@ -8,9 +8,9 @@
 
 ## signup
 
-endpoint = '/signup'.
+Endpoint = '/signup'.
 
-method = 'POST'.
+Method = 'POST'.
 
         request_body = {
             "firstname" : "string",     [required]
@@ -39,9 +39,9 @@ method = 'POST'.
 
 ## login
 
-endpoint = '/login'
+Endpoint = '/login'
 
-method = 'POST'
+Method = 'POST'
 
         request_body = {
         "u": "string", [required] => could be eamil or username
@@ -65,9 +65,9 @@ method = 'POST'
 
 ## auth with access token
 
-endpoint = '/auth'
+Endpoint = '/auth'
 
-method = 'POST'
+Method = 'POST'
 
         request_body = {
          token:"access_token goes here"
@@ -86,4 +86,19 @@ method = 'POST'
         "isAuth":false,
         }
 
-# products
+# users
+
+## getById
+
+Endpoint = "/user/:id"
+
+Method = "GET"
+
+        response = {
+        "firstname" ,
+        "lastname" ,
+        "username" ,
+        "password" ,
+        "email" ,
+        "avatar" ,
+        }

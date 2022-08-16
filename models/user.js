@@ -11,8 +11,8 @@ module.exports = class User {
   async getById(id) {
     let client = await this.pool.connect();
     try {
-      let sql =
-        'SELECT user_id , firstname , lastname , username , email , avatar FROM users WHERE user_id = $1';
+      let sql = `SELECT user_id , firstname , lastname , username , email , avatar , created_at
+                 FROM users WHERE user_id = $1`;
       let res = await client.query(sql, [id]);
       return res.rows[0];
     } catch (error) {
@@ -31,7 +31,7 @@ module.exports = class User {
                      username = COALESCE($3, users.username),
                      email = COALESCE($4, users.email),
                      avatar = COALESCE($5, users.avatar)
-                   WHERE user_id = $6 RETURNING firstname , lastname , username , email , avatar;
+                   WHERE user_id = $6 RETURNING firstname , lastname , username , email , avatar
                    `;
       let res = await client.query(sql, [
         firstname,

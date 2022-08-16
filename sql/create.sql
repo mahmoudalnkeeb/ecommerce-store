@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS users(
     hashed_pass VARCHAR NOT NULL,
     salt VARCHAR(255),
     access_token VARCHAR,
-    avatar VARCHAR NOT NULL
+    avatar VARCHAR NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 -- Create categories table
@@ -32,7 +33,8 @@ CREATE TABLE IF NOT EXISTS products(
     product_name VARCHAR(255) NOT NULL,
     product_img VARCHAR(255) NOT NULL,
     product_price INTEGER NOT NULL,
-    product_desc TEXT NOT NULL
+    product_desc TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS rates(
@@ -51,5 +53,6 @@ CREATE TABLE IF NOT EXISTS offers(
     offer_image VARCHAR(255),
     offer_desc TEXT,
     discount DOUBLE PRECISION NOT NULL DEFAULT 0.0,
-    product_id VARCHAR(64) REFERENCES products(product_id)
+    product_id VARCHAR(64) REFERENCES products(product_id),
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
