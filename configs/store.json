@@ -1,0 +1,21 @@
+{
+    "store": {
+        "name": "marketify",
+        "ver": "v1.0.0",
+        "id": "unique id goes here to track problems and for support"
+    },
+    "preferences": {
+        "categories": [
+            {
+                "category_id": "category_id1",
+                "category_name": "category1",
+                "category_desc": "this is category1"
+            },
+            {
+                "category_id": "category_id2",
+                "category_name": "category2",
+                "category_desc": "this is category2"
+            }
+        ]
+    }
+}

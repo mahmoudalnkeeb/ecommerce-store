@@ -1,6 +1,7 @@
 const { SALT_ROUNDS } = require('../configs/env');
 const bcrypt = require('bcrypt');
 const Hash = require('../utils/bcrypt');
+const generateId = require('../utils/id');
 const hash = new Hash(bcrypt, SALT_ROUNDS);
 
 module.exports = class Auth {
@@ -80,10 +81,12 @@ module.exports = class Auth {
     const client = await this.pool.connect();
     try {
       let sql =
-        'INSERT INTO users(firstname, lastname, username, email, hashed_pass , salt , avatar) VALUES($1 , $2 , $3 , $4 , $5 , $6 , $7) RETURNING user_id ';
+        'INSERT INTO users(user_id , firstname, lastname, username, email, hashed_pass , salt , avatar) VALUES($1 , $2 , $3 , $4 , $5 , $6 , $7 , $8) RETURNING user_id ';
       const salt = hash.genSalt();
+      const userId = generateId();
       let hashed_pass = hash.createHash(password, salt);
       let res = await client.query(sql, [
+        userId,
         firstname,
         lastname,
         username,
