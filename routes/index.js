@@ -1,7 +1,5 @@
 const router = require('express').Router();
-const checkDev = require('../middlewares/checkDev');
 const authRouter = require('./auth');
-const devRouter = require('./dev_routes');
 
 // views routes
 router.get('/', (req, res) => {
@@ -23,6 +21,5 @@ router.get('/docs', (req, res) => {
 
 // Restapi Routes
 router.use('/', authRouter);
-router.use('/dev', checkDev, devRouter);
 
 module.exports = router;
