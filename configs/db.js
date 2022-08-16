@@ -8,6 +8,6 @@ let pool = new Pool({
   host,
   port,
   database,
-  max: 20,
+  max: 80,
 });
 module.exports = pool;
