@@ -21,6 +21,7 @@
     "morgan": "~1.9.1",
     "pg": "^8.7.3",
     "pg-connection-string": "^2.5.0",
+    "pg-format": "^1.0.4",
     "shortid": "^2.2.16"
   },
   "devDependencies": {
