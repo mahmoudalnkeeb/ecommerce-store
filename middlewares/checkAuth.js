@@ -14,7 +14,6 @@ module.exports = async function isAuth(req, res, next) {
   if (!realToken) return res.status(401).json({ isAuth: false });
   let user = tokens.decodeToken(token);
   let checkAccessToken = (await auths.getToken(user.user_id)) === token;
-  if (checkAccessToken) return res.status(200).json({ isAuth: true, user });
+  if (checkAccessToken) return next();
   res.status(401).json({ isAuth: false });
-  next();
 };
