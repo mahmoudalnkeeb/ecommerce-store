@@ -6,5 +6,6 @@ const authControllers = new AuthController();
 router.post('/login', validateLogin, authControllers.login);
 router.post('/signup', validateSignup, authControllers.signup);
 router.post('/auth', authControllers.checkIsAuth);
+router.put('/logout', authControllers.logout);
 
 module.exports = router;

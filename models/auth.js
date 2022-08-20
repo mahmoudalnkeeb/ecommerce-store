@@ -118,13 +118,24 @@ module.exports = class Auth {
     }
   }
   async getToken(user_id) {
-    const client = await this.pool.connect();
+    let client = await this.pool.connect();
     try {
       let sql = 'SELECT access_token FROM users WHERE user_id=$1';
       let res = await client.query(sql, [user_id]);
       let data = res.rows[0];
       if (data) return data.access_token;
       return false;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+  async logout(user_id) {
+    let client = await this.pool.connect();
+    try {
+      let sql = 'UPDATE users SET access_token = "expired" WHERE user_id = $1';
+      await client.query(sql, [user_id]);
     } catch (error) {
       throw error;
     } finally {
