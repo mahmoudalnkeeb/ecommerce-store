@@ -9,6 +9,7 @@ const app = express();
 // import routers
 const indexRouter = require('./routes/index');
 const errHandler = require('./middlewares/errHandler');
+const checkRole = require('./middlewares/checkRole');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,6 +26,7 @@ app.use(
     origin: '*',
   })
 );
+app.use(checkRole);
 // routers
 
 app.use(indexRouter);

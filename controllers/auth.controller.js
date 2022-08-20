@@ -19,6 +19,8 @@ class AuthController {
         let user = await auths.loginWithUsername(u);
 
         // here goes Jwt method
+        user.role = 'user';
+
         let token = tokens.createToken(user);
         let oneDay = 1000 * 60 * 60 * 24;
         let access_token = await auths.updateToken(token);
@@ -34,6 +36,8 @@ class AuthController {
       let user = await auths.loginWithEmail(u);
 
       // here goes Jwt method
+      user.role = 'user';
+
       let token = tokens.createToken(user);
       let oneDay = 1000 * 60 * 60 * 24;
       let access_token = await auths.updateToken(token);
@@ -57,6 +61,8 @@ class AuthController {
         password,
         avatar,
       });
+
+      user.role = 'user';
 
       let token = tokens.createToken(user);
       let access_token = await auths.updateToken(token);

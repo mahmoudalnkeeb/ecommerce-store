@@ -4,7 +4,19 @@
             "permissions": [
                 "getById",
                 "updateUser",
-                "updatePassword"
+                "updatePassword",
+                "getProducts",
+                "getOffers",
+                "getDiscounts"
+            ]
+        },
+        "guest": {
+            "permissions": [
+                "getProducts",
+                "getOffers",
+                "getDiscounts",
+                "login",
+                "signup"
             ]
         }
     }
