@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken')
+const {jwtSecret} = require('../configs/env')
 const pool = require('../configs/db');
 const Auth = require('../models/auth');
 const Token = require('../utils/jwt');
