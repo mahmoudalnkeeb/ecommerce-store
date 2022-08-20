@@ -8,7 +8,6 @@ class Hash {
   }
 
   compareHash(password, hash, salt) {
-    console.log(this.salt);
     return this.bcrypt.compareSync(password + salt, hash);
   }
   genSalt() {

@@ -6,7 +6,7 @@ module.exports = class Category {
   async create(categoriesArr){
     const client = this.pool.connect()
     try {
-        let sql = 'INSERT INTO categories(cat_id , cat_name , cat)'
+        let sql = 'INSERT INTO categories(cat_id , cat_name , cat_desc)'
     } catch (error) {
         
     }finally{
