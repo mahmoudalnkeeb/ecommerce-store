@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const authRouter = require('./auth');
-
+const usersRouter = require('./users')
 // views routes
 router.get('/', (req, res) => {
   res.send(
@@ -21,5 +21,6 @@ router.get('/docs', (req, res) => {
 
 // Restapi Routes
 router.use('/', authRouter);
+router.use('/',usersRouter)
 
 module.exports = router;
