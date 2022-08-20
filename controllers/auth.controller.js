@@ -92,7 +92,7 @@ class AuthController {
     try {
       let { userId } = req.body;
       await auths.logout(userId);
-      res.status(200).json({ msg: 'success' });
+      res.clearCookie('auth').status(200).json({ msg: 'success' });
     } catch (error) {
       next(error);
     }
