@@ -8,7 +8,8 @@ const auths = new Auth(pool)
 
 
 module.exports = async function isAuth(req, res, next) {
-  let token = req.headers['authorization'].split('')[0];
+  let token = req.headers.authorization;
+  console.log(token)
   let realToken = tokens.checkToken(token);
   if (!realToken) return res.status(401).json({ isAuth: false });
   let user = tokens.decodeToken(token);
