@@ -1,4 +1,6 @@
-# users
+# store api docs
+
+## auth
 
 - [signup](#signup)
 
@@ -6,7 +8,13 @@
 
 - [auth](#auth-with-access-token)
 
-## signup
+- [logout](#logout)
+
+## users
+
+- [get by id](#getbyid)
+
+### signup
 
         fetch('/signup', {
           method: 'POST',
@@ -43,7 +51,7 @@
           "inputs": "string" [invalid input name]
         }
 
-## login
+### login
 
         fetch('/login', {
           method: 'POST',
@@ -76,7 +84,7 @@
 
 [NOTE] : password should be minimum 8 chars 1 letter and 1 special char at least.
 
-## auth with access token
+### auth with access token
 
         fetch('/auth', {
           method: 'POST',
@@ -104,8 +112,7 @@
           "isAuth":false,
         }
 
-
-## logout
+### logout
 
         fetch('/logout' , {
           method:"PUT",
@@ -117,10 +124,9 @@
 
 # users
 
-## getById
+### getById
 
 #### require authorization
-
 
         fetch('/user/:id' , {
           headers:{
