@@ -16,6 +16,8 @@
 
 - [update user data](#update-user-data)
 
+- [update user password](#update-user-password)
+
 ### signup
 
         fetch('/signup', {
