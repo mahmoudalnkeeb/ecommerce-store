@@ -90,7 +90,7 @@ class AuthController {
   }
   async logout(req, res, next) {
     try {
-      let { userId } = req.body;
+      let  userId = req.userId;
       await auths.logout(userId);
       res.clearCookie('auth').status(200).json({ msg: 'success' });
     } catch (error) {

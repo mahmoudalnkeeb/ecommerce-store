@@ -8,97 +8,137 @@
 
 ## signup
 
-Endpoint = '/signup'.
+        fetch('/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            firstname: 'string', //   [required]
+            lastname: 'string',  //   [required]
+            username: 'string',  //   [required]
+            password: 'string',  //   [required]
+            email: 'string',     //   [not required] can be added later
+            avatar: 'string',    //   [not required] if not supplied it become "default:avatar"
+          }),
+        }).then(
+          (res) => console.log(res),
+          (rej) => console.log(rej)
+        );
 
-Method = 'POST'.
-
-        request_body = {
-            "firstname" : "string",     [required]
-            "lastname" : "string",      [required]
-            "username" : "string",      [required]
-            "password" : "string",      [required]
-            "email" : "string", =>      [not required] can be added later
-            "avatar" : "string" (url)   [not required] if not supplied it become "defaul:avatar"
-            }
 
         response_onSuccess = {
-        "message":"account created successfully",
-        "token":"string" [user's access_token]
+          "message":"account created successfully",
+          "token":"string" [user's access_token]
         }
 
         response_onValidationFail = {
-        "nulls":[], => contains empty fields
-        "invalid":[], => contains invalid inputs like email or password
+          "nulls":[], // contains empty fields
+          "invalid":[], // contains invalid inputs like email or password
         }
 
 
         response_onUsedUsernameFail ={
-        "error": "some data you entered is invalid",
-        "inputs": "string" [invalid input name]
+          "error": "some data you entered is invalid",
+          "inputs": "string" [invalid input name]
         }
 
 ## login
 
-Endpoint = '/login'
+        fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            u: 'string', //[required] => could be eamil or username
+            password: 'string', //[required]
+          }),
+        }).then(
+          (res) => console.log(res),
+          (rej) => console.log(rej)
+        );
 
-Method = 'POST'
-
-        request_body = {
-        "u": "string", [required] => could be eamil or username
-        "password" : "string", [required]
-        }
 
         response_onSuccess = {
-        "token":"string" [user's access_token]
-        }
+          token: 'string', //[user's access_token]
+        };
+
 
         response_onValidationFail = {
-        "nulls":[], => contains empty fields
-        "invalid":[], => contains invalid inputs like email or password
-        }
+          nulls: [], // contains empty fields
+          invalid: [], // contains invalid inputs like email or password
+        };
 
         response_onWrongData = {
-        "msg":'Wrong username or password'
+          "msg":'Wrong username or password'
         }
 
 [NOTE] : password should be minimum 8 chars 1 letter and 1 special char at least.
 
 ## auth with access token
 
-Endpoint = '/auth'
-
-Method = 'POST'
-
-        request_body = {
-         token:"access_token goes here"
-        }
+        fetch('/auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            token:"access_token goes here"
+          }),
+        }).then(
+          (res) => console.log(res),
+          (rej) => console.log(rej)
+        );
 
         response_onSuccess = {
-        "isAuth":true,
-        "user" :{
-        "user_id": 1, [user_id]
-        "iat": 1660569878, [iniated at for token]
-        "exp": 1660656278 [token expiry date]
+          "isAuth":true,
+          "user" :{
+             "user_id": 1, [user_id]
+             "iat": 1660569878, [iniated at for token]
+             "exp": 1660656278 [token expiry date]
             }
         }
 
         response_onFail = {
-        "isAuth":false,
+          "isAuth":false,
         }
+
+
+## logout
+
+        fetch('/logout' , {
+          method:"PUT",
+          headers:{
+            "Content-Type":'application/json',
+            "authorization":"access_token goes here"
+          }
+        })
 
 # users
 
 ## getById
 
-Endpoint = "/user/:id"
+#### require authorization
 
-Method = "GET"
+
+        fetch('/user/:id' , {
+          headers:{
+            "authorization":"access_token goes here"
+          }
+        }).then(
+          (res) => console.log(res),
+          (rej) => console.log(rej)
+        );
+
+
 
         response = {
-        "firstname" ,
-        "lastname" ,
-        "username" ,
-        "password" ,
-        "email" ,
-        "avatar" ,
+          "user_id":"user unique id" ,
+          "firstname":"user firstname" ,
+          "lastname" : 'user lastname',
+          "username" : 'username',
+          "email" : 'user email',
+          "avatar":'user image/avatar url' ,
+          "created_at": 'date of user signup'
         }
