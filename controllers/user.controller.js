@@ -20,7 +20,8 @@ module.exports = class UserController {
   }
   async updateUser(req, res, next) {
     try {
-      const { firstname, lastname, username, email, avatar, userId } = req.body;
+      const { firstname, lastname, username, email, avatar } = req.body;
+      let userId = req.userId;
       let newData = await users.updateUser(
         firstname,
         lastname,
@@ -36,8 +37,11 @@ module.exports = class UserController {
   }
   async updatePassword(req, res, next) {
     try {
-      const { newPass } = req.body;
-      let data = await users.updatePassword(newPass, req.userid);
+      const { newPass, oldPass } = req.body;
+      const userId = req.userId;
+      let isRealPass = await auths.checkPassById(userId, oldPass);
+      if (!isRealPass) return res.status(400).json({ msg: 'wrong password' });
+      let data = await users.updatePassword(newPass, userId);
       let newToken = tokens.createToken(data);
       let token = await auths.updateToken(newToken);
       return res

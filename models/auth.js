@@ -76,6 +76,25 @@ module.exports = class Auth {
       client.release();
     }
   }
+  async checkPassById(user_id, password) {
+    const client = await this.pool.connect();
+    try {
+      let sql = 'SELECT hashed_pass , salt FROM users WHERE user_id=$1';
+      let res = await client.query(sql, [user_id]);
+      let data = res.rows[0];
+      if (data) {
+        let hashedPass = data.hashed_pass;
+        let salt = data.salt;
+        if (!hash.compareHash(password, hashedPass, salt)) return false;
+        return true;
+      }
+      return false;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
 
   async signup({ firstname, lastname, username, email, password, avatar }) {
     const client = await this.pool.connect();
@@ -135,7 +154,7 @@ module.exports = class Auth {
     let client = await this.pool.connect();
     try {
       let sql = 'UPDATE users SET access_token = $1 WHERE user_id = $2';
-      await client.query(sql, ["expired",user_id]);
+      await client.query(sql, ['expired', user_id]);
     } catch (error) {
       throw error;
     } finally {

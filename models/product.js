@@ -4,11 +4,13 @@ module.exports = class Product {
   constructor(pool) {
     this.pool = pool;
   }
-  async getProducts(filter, page) {
+  async getProducts(sortBy, page) {
     let client = await this.pool.connect();
     try {
-      let { offset, sql } = pagination(filter, page);
+      let { offset, sql } = pagination(sortBy, page);
       let res = await client.query(sql, [offset]);
+
+      // TODO
       return res.rows;
     } catch (error) {
       throw error;
@@ -30,7 +32,7 @@ module.exports = class Product {
       client.release();
     }
   }
-  async searchProduct(name, category, price) {
+  async searchProduct(name, category, price) { // not done yet
     let client = await this.pool.connect();
     try {
       let sql = `SELECT
@@ -65,9 +67,23 @@ module.exports = class Product {
         'INSERT INTO products(product_id,product_name,product_images,product_price,product_desc,product_category,created_at) VALUES %L',
         productsArr
       );
+      await client.query(sql);
     } catch (error) {
     } finally {
       client.release();
     }
   }
+
+  async deleteProduct(productId) {
+    let client = await this.pool.connect();
+    try {
+      let sql = 'DELETE FROM product WHERE product_id = $1'
+      await client.query(sql , [productId]);
+    } catch (error) {
+    } finally {
+      client.release();
+    }
+  }
+
+   
 };

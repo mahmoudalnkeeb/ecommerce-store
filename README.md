@@ -14,6 +14,8 @@
 
 - [get by id](#getbyid)
 
+- [update user data](#update-user-data)
+
 ### signup
 
         fetch('/signup', {
@@ -148,3 +150,49 @@
           "avatar":'user image/avatar url' ,
           "created_at": 'date of user signup'
         }
+
+### update user data
+
+#### require authorization
+
+        fetch('/user' , {
+          method:"PUT"
+          headers:{
+            "authorization":"access_token goes here"
+          },
+
+          // only updates supplied data in body
+          body:JSON.stringify({
+            firstname : "new data", // [NOT REQUIRED]
+            lastname : "new data", // [NOT REQUIRED]
+            username : "new data", // [NOT REQUIRED]
+            email : "new data", // [NOT REQUIRED]
+            avatar : "new data", // [NOT REQUIRED]
+          })
+        }).then(
+          (res) => console.log(res),
+          (rej) => console.log(rej)
+        );
+
+    response = {firstname , lastname , username , email , avatar}
+
+### update user password
+
+#### require authorization
+
+        fetch('/user/password' , {
+          method:"PUT"
+          headers:{
+            "authorization":"access_token goes here"
+          },
+
+          body:JSON.stringify({
+            newPass, // [REQUIRED]
+            oldPass, // [REQUIRED]
+          })
+        }).then(
+          (res) => console.log(res),
+          (rej) => console.log(rej)
+        );
+
+      response = {access_token: new access token }

@@ -28,10 +28,10 @@ function calcRate({
     total;
   return rate.toFixed(1);
 }
-function pagination(filter, page) {
+function pagination(sortBy, page) {
   let offset = (page - 1) * 20;
   let sql;
-  switch (filter) {
+  switch (sortBy) {
     case 'recent':
       sql = `SELECT
              product_id,product_name,product_img,product_price,product_desc,created_at
