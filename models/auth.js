@@ -134,8 +134,8 @@ module.exports = class Auth {
   async logout(user_id) {
     let client = await this.pool.connect();
     try {
-      let sql = 'UPDATE users SET access_token = "expired" WHERE user_id = $1';
-      await client.query(sql, [user_id]);
+      let sql = 'UPDATE users SET access_token = $1 WHERE user_id = $2';
+      await client.query(sql, ["expired",user_id]);
     } catch (error) {
       throw error;
     } finally {
