@@ -1,6 +1,6 @@
 # store api docs
 
-## auth
+## [auth](#auth)
 
 - [signup](#signup)
 
@@ -10,13 +10,19 @@
 
 - [logout](#logout)
 
-## users
+## [users](#users)
 
 - [get by id](#getbyid)
 
 - [update user data](#update-user-data)
 
 - [update user password](#update-user-password)
+
+
+---
+
+
+## auth
 
 ### signup
 
@@ -126,7 +132,10 @@
           }
         })
 
-# users
+
+---
+
+## users
 
 ### getById
 
