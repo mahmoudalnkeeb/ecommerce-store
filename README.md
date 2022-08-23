@@ -1,6 +1,6 @@
 # store api docs
 
-## [auth](#auth)
+## [auth](#auth-1)
 
 - [signup](#signup)
 
@@ -10,7 +10,7 @@
 
 - [logout](#logout)
 
-## [users](#users)
+## [users](#users-1)
 
 - [get by id](#getbyid)
 
@@ -18,13 +18,9 @@
 
 - [update user password](#update-user-password)
 
-
-
-
----
-
-
-
+<br>
+<br>
+<br>
 
 ## auth
 
@@ -65,7 +61,11 @@
           "inputs": "string" [invalid input name]
         }
 
+
+
 ### login
+
+
 
         fetch('/login', {
           method: 'POST',
@@ -136,13 +136,9 @@
           }
         })
 
+<br>
 
-
-
----
-
-
-
+<br>
 
 ## users
 
