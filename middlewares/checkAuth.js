@@ -8,17 +8,17 @@ const auths = new Auth(pool);
 
 async function isAuth(req, res, next) {
   let token = req.headers.authorization;
-  if (!token) return res.status(401).json({ isAuth: false });
+  if (!token) return res.status(401).json({ msg: 'unauthorized' });
   let realToken = tokens.checkToken(token);
-  if (!realToken) return res.status(401).json({ isAuth: false });
+  if (!realToken) return res.status(401).json({ msg: 'unauthorized' });
   let user = tokens.decodeToken(token);
   let checkAccessToken = (await auths.getToken(user.user_id)) === token;
 
   if (checkAccessToken) {
-    req.userId = user.user_id
+    req.userId = user.user_id;
     return next();
   }
 
-  res.status(401).json({ isAuth: false });
+  res.status(401).json({ msg: 'unauthorized' });
 }
 module.exports = isAuth;
