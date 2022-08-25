@@ -25,7 +25,7 @@ module.exports = class User {
   async updateUser({ firstname, lastname, username, email, avatar, userId }) {
     let client = await this.pool.connect();
     try {
-      console.log(userId);
+
       let sqlOld =
         'SELECT firstname , lastname , username , email , avatar FROM users WHERE user_id = $1;';
       let resOld = await client.query(sqlOld, [userId]);
@@ -37,7 +37,6 @@ module.exports = class User {
       let em = email || resOld.rows[0]?.email;
       let av = avatar || resOld.rows[0]?.avatar;
 
-      console.log(fn, ln);
 
       let sql = `UPDATE users SET 
                      firstname = $1,
