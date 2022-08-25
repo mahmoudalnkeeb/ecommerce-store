@@ -25,22 +25,30 @@ module.exports = class User {
   async updateUser({ firstname, lastname, username, email, avatar, userId }) {
     let client = await this.pool.connect();
     try {
+      console.log(userId);
+      let sqlOld =
+        'SELECT firstname , lastname , username , email , avatar FROM users WHERE user_id = $1;';
+      let resOld = await client.query(sqlOld, [userId]);
+
+      // alt if not supplied
+      let fn = firstname || resOld.rows[0]?.firstname;
+      let ln = lastname || resOld.rows[0]?.lastname;
+      let un = username || resOld.rows[0]?.username;
+      let em = email || resOld.rows[0]?.email;
+      let av = avatar || resOld.rows[0]?.avatar;
+
+      console.log(fn, ln);
+
       let sql = `UPDATE users SET 
-                     firstname = COALESCE($1, users.firstname),
-                     lastname = COALESCE($2, users.lastname),
-                     username = COALESCE($3, users.username),
-                     email = COALESCE($4, users.email),
-                     avatar = COALESCE($5, users.avatar)
-                   WHERE user_id = $6 RETURNING firstname , lastname , username , email , avatar
-                   `;
-      let res = await client.query(sql, [
-        firstname,
-        lastname,
-        username,
-        email,
-        avatar,
-        userId,
-      ]);
+                     firstname = $1,
+                     lastname = $2,
+                     username = $3,
+                     email = $4,
+                     avatar = $5
+                 WHERE user_id = $6 
+                 RETURNING firstname , lastname , username , email , avatar`;
+
+      let res = await client.query(sql, [fn, ln, un, em, av, userId]);
 
       return res.rows[0];
     } catch (error) {

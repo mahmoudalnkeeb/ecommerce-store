@@ -4,14 +4,26 @@ module.exports = class Token {
     this.jwtSecret = jwtSecret;
   }
   createToken(payload) {
-    return this.jwt.sign(payload, this.jwtSecret, {
-      expiresIn: '24h',
-    });
+    try {
+      return this.jwt.sign(payload, this.jwtSecret, {
+        expiresIn: '24h',
+      });
+    } catch (error) {
+      throw error;
+    }
   }
   checkToken(token) {
-    return this.jwt.verify(token, this.jwtSecret);
+    try {
+      return this.jwt.verify(token, this.jwtSecret);
+    } catch (error) {
+      return false;
+    }
   }
   decodeToken(token) {
-    return this.jwt.decode(token);
+    try {
+      return this.jwt.decode(token);
+    } catch (error) {
+      throw error;
+    }
   }
 };
