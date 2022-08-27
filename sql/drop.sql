@@ -15,3 +15,6 @@ DROP TABLE IF EXISTS rates CASCADE;
 
 -- drop offers table
 DROP TABLE IF EXISTS offers CASCADE;
+
+-- drop discounts table
+DROP TABLE IF EXISTS discounts CASCADE;

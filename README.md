@@ -61,11 +61,7 @@
           "inputs": "string" [invalid input name]
         }
 
-
-
 ### login
-
-
 
         fetch('/login', {
           method: 'POST',
@@ -212,3 +208,14 @@
         );
 
       response = {access_token: new access token }
+
+### delete user account
+
+#### require authorization
+
+        fetch('/user/password' , {
+          method:"DELETE"
+          headers:{
+            "authorization":"access_token goes here"
+          }
+        )

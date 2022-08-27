@@ -5,5 +5,6 @@ const router = require('express').Router();
 router.get('/:id', usersController.getById);
 router.put('/', usersController.updateUser);
 router.put('/password', usersController.updatePassword);
+router.delete('/', usersController.deleteUser);
 
 module.exports = router;

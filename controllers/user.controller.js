@@ -9,18 +9,21 @@ const auths = new Auth(pool);
 const tokens = new Token(jwt, JWT_SECRET);
 
 module.exports = class UserController {
+  // [profile] get user data by id for profile only user can get his data
   async getById(req, res, next) {
     try {
-      const id = req.params.id;
+      let { id } = req.params;
       let userData = await users.getById(id);
       res.status(200).json(userData);
     } catch (error) {
       next(error);
     }
   }
+
+  // [personal inforamtion] update user data with supplied new data and return data after update
   async updateUser(req, res, next) {
     try {
-      const { firstname, lastname, username, email, avatar } = req.body;
+      let { firstname, lastname, username, email, avatar } = req.body;
       let userId = req.userId;
       let newData = await users.updateUser({
         firstname,
@@ -35,14 +38,16 @@ module.exports = class UserController {
       next(error);
     }
   }
+
+  // [security] update password
   async updatePassword(req, res, next) {
     try {
-      const { newPass, oldPass } = req.body;
+      let { newPass, oldPass } = req.body;
       if (!oldPass)
         return res.status(400).json({ msg: 'please enter your old password' });
       if (!newPass)
         return res.status(400).json({ msg: 'please enter your new password' });
-      const userId = req.userId;
+      let userId = req.userId;
       let isRealPass = await auths.checkPassById(userId, oldPass);
       if (!isRealPass) return res.status(400).json({ msg: 'wrong password' });
       let data = await users.updatePassword(newPass, userId);
@@ -52,6 +57,17 @@ module.exports = class UserController {
         .status(200)
         .cookie('auth', access_token, { maxAge: oneDay })
         .json({ access_token: token });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // delete account
+  async deleteUser(req, res, next) {
+    try {
+      let userId = req.userId;
+      await users.deleteUser(userId);
+      res.status(204).json({ msg: 'success' });
     } catch (error) {
       next(error);
     }

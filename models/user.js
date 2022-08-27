@@ -8,6 +8,7 @@ module.exports = class User {
     this.pool = pool;
   }
 
+  // get user data for profile only user can access his data
   async getById(id) {
     let client = await this.pool.connect();
     try {
@@ -22,10 +23,10 @@ module.exports = class User {
     }
   }
 
+  // update user date only supllied data will be change
   async updateUser({ firstname, lastname, username, email, avatar, userId }) {
     let client = await this.pool.connect();
     try {
-
       let sqlOld =
         'SELECT firstname , lastname , username , email , avatar FROM users WHERE user_id = $1;';
       let resOld = await client.query(sqlOld, [userId]);
@@ -36,7 +37,6 @@ module.exports = class User {
       let un = username || resOld.rows[0]?.username;
       let em = email || resOld.rows[0]?.email;
       let av = avatar || resOld.rows[0]?.avatar;
-
 
       let sql = `UPDATE users SET 
                      firstname = $1,
@@ -56,6 +56,8 @@ module.exports = class User {
       client.release();
     }
   }
+
+  // update password and change salt
   async updatePassword(newPass, userId) {
     let client = await this.pool.connect();
     try {
@@ -65,6 +67,19 @@ module.exports = class User {
       let hashed_pass = hash.createHash(newPass, salt);
       let res = await client.query(sql, [hashed_pass, salt, userId]);
       return res.rows[0];
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  // delete user account return void
+  async deleteUser(userId) {
+    let client = await this.pool.connect();
+    try {
+      let sql = 'DELETE FROM users WHERE user_id = $1';
+      await client.query(sql, [userId]);
     } catch (error) {
       throw error;
     } finally {
