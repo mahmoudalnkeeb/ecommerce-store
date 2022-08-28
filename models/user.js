@@ -62,7 +62,7 @@ module.exports = class User {
     let client = await this.pool.connect();
     try {
       let sql =
-        'UPDATE SET hashed_pass = $1 , salt = $2 WHERE user_id = $3 RETURNING user_id';
+        'UPDATE users SET hashed_pass = $1 , salt = $2 WHERE user_id = $3 RETURNING user_id';
       let salt = hash.genSalt();
       let hashed_pass = hash.createHash(newPass, salt);
       let res = await client.query(sql, [hashed_pass, salt, userId]);
