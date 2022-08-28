@@ -14,13 +14,8 @@ async function isAuth(req, res, next) {
   let user = tokens.decodeToken(token);
   let checkAccessToken = (await auths.getToken(user.user_id)) === token;
 
-  console.log(`userJwtDecode-Auth : ${user}`);
-
   if (checkAccessToken) {
     req.userId = user.user_id;
-
-    console.log(`userId-Auth : ${req.userId}`);
-
     return next();
   }
 
