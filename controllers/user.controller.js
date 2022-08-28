@@ -55,7 +55,7 @@ module.exports = class UserController {
       let token = await auths.updateToken(newToken);
       return res
         .status(200)
-        .cookie('auth', access_token, { maxAge: oneDay })
+        .cookie('auth', token, { maxAge: oneDay })
         .json({ access_token: token });
     } catch (error) {
       next(error);
