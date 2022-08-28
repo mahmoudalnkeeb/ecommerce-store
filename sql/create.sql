@@ -14,18 +14,19 @@ CREATE TABLE IF NOT EXISTS users(
 
 -- Create categories table
 CREATE TABLE IF NOT EXISTS categories(
-    cat_id VARCHAR(64) PRIMARY KEY UNIQUE NOT NULL,
+    cat_id SERIAL PRIMARY KEY,
     cat_name VARCHAR(64) UNIQUE NOT NULL,
     cat_image VARCHAR(255) NOT NULL,
-    cat_desc VARCHAR(64)
+    cat_desc TEXT
 );
 
 -- Create subcategories table
 CREATE TABLE IF NOT EXISTS sub_categories(
-    subcat_id VARCHAR(64) PRIMARY KEY UNIQUE NOT NULL,
+    subcat_id SERIAL PRIMARY KEY,
     subcat_name VARCHAR(64) UNIQUE NOT NULL,
-    subcat_desc VARCHAR(64) UNIQUE NOT NULL,
-    sub_to VARCHAR(64) REFERENCES categories(cat_id) ON DELETE
+    subcat_image VARCHAR(255) NOT NULL,
+    subcat_desc TEXT,
+    sub_to INTEGER REFERENCES categories(cat_id) ON DELETE
     SET
         NULL ON UPDATE CASCADE
 );
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS products(
     product_price INTEGER NOT NULL,
     product_desc TEXT NOT NULL,
     product_images VARCHAR [],
-    product_category VARCHAR(64) REFERENCES categories(cat_id) ON DELETE
+    product_category INTEGER REFERENCES categories(cat_id) ON DELETE
     SET
         NULL ON UPDATE CASCADE,
         created_at TIMESTAMP NOT NULL DEFAULT NOW()
