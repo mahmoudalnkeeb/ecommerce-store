@@ -46,12 +46,12 @@ CREATE TABLE IF NOT EXISTS products(
 
 CREATE TABLE IF NOT EXISTS rates(
     rate_id SERIAL PRIMARY KEY,
-    five_stars_count INTEGER NOT NULL DEFAULT 0,
-    four_stars_count INTEGER NOT NULL DEFAULT 0,
-    three_stars_count INTEGER NOT NULL DEFAULT 0,
-    two_stars_count INTEGER NOT NULL DEFAULT 0,
-    one_stars_count INTEGER NOT NULL DEFAULT 0,
+    rate_value INTEGER,
+    rate_text TEXT,
     product_id VARCHAR(64) REFERENCES products(product_id) ON DELETE
+    SET
+        NULL ON UPDATE CASCADE,
+        user_id VARCHAR(64) REFERENCES users(user_id) ON DELETE
     SET
         NULL ON UPDATE CASCADE
 );
@@ -71,9 +71,18 @@ CREATE TABLE IF NOT EXISTS offers(
 CREATE TABLE IF NOT EXISTS discounts(
     discount_id SERIAL PRIMARY KEY,
     discount_value DOUBLE PRECISION NOT NULL DEFAULT 0.0,
-    discunt_time INTEGER NOT NULL,
+    discount_time INTEGER NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    with_code BOOLEAN NOT NULL DEFAULT FALSE,
+    product_id VARCHAR(64) REFERENCES products(product_id) ON DELETE
+    SET
+        NULL ON UPDATE CASCADE
+);
+
+-- coupons 
+CREATE TABLE IF NOT EXISTS coupons(
+    coupon_id SERIAL PRIMARY KEY,
+    coupon_code VARCHAR(32) NOT NULL UNIQUE,
+    discount_value DOUBLE PRECISION NOT NULL DEFAULT 0.0,
     product_id VARCHAR(64) REFERENCES products(product_id) ON DELETE
     SET
         NULL ON UPDATE CASCADE

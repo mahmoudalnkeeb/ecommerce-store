@@ -3,7 +3,7 @@ class ProductRate {
     this.pool = pool;
   }
 
-  async rateProduct() {
+  async getProductRate(productId) {
     let client = await this.pool.connect();
     try {
       // todo
@@ -14,13 +14,63 @@ class ProductRate {
     }
   }
 
-  calcRate({
-    fiveStarsCount,
-    fourStarsCount,
-    threeStarsCount,
-    twoStarsCount,
-    oneStarCount,
-  }) {
+  async userProductRate(rateId, userId) {
+    let client = await this.pool.connect();
+    try {
+      // todo
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  async newRate(value, text, userId, productId) {
+    let client = await this.pool.connect();
+    try {
+      // todo
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  async updateRate() {
+    let client = await this.pool.connect();
+    try {
+      // todo
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+  async deleteRate() {
+    let client = await this.pool.connect();
+    try {
+      // todo
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  // [PRIVATE METHODS]
+
+  async #getRates(productId) {
+    let client = await this.pool.connect();
+    try {
+      // todo
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  async #calcProductRate(productId) {
     const total =
       fiveStarsCount +
       fourStarsCount +
