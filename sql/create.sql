@@ -7,8 +7,19 @@ CREATE TABLE IF NOT EXISTS users(
     email VARCHAR(64) UNIQUE,
     hashed_pass VARCHAR NOT NULL,
     salt VARCHAR(255),
-    access_token VARCHAR,
+    access_token VARCHAR(255),
     avatar VARCHAR NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS admins(
+    admin_id VARCHAR(64) PRIMARY KEY UNIQUE NOT NULL,
+    admin_fullname VARCHAR(64) NOT NULL,
+    admin_username VARCHAR(32) UNIQUE NOT NULL,
+    email VARCHAR(64) UNIQUE,
+    hashed_pass VARCHAR NOT NULL,
+    salt VARCHAR(255),
+    access_token VARCHAR(255),
     created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
