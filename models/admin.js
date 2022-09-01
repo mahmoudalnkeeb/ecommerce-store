@@ -35,6 +35,64 @@ class Admin {
       client.release();
     }
   }
+
+  async getAdminId(username) {
+    let client = await this.pool.connect();
+    try {
+      let sql = 'SELECT admin_id FROM admins WHERE admin_username = $1';
+      let res = await client.query(sql, [username]);
+      return res.rows[0].admin_id;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  // AUTH METHODS
+  async getAccessToken(adminId) {
+    let client = await this.pool.connect();
+    try {
+      let sql = 'SELECT access_token FROM admins WHERE admin_id = $1';
+      let res = await client.query(sql, [adminId]);
+      return res.rows[0].admin_id;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  async updateAcessToken(adminId, newAccessToken) {
+    let client = await this.pool.connect();
+    try {
+      let sql =
+        'UPDATE admins SET access_token = $1 WHERE admin_id = $2 RETURNING access_token';
+      let res = await client.query(sql, [newAccessToken, adminId]);
+      return res.rows[0].access_token;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  async checkAdminPass(username, password) {
+    let client = await this.pool.connect();
+    try {
+      let sql =
+        'SELECT salt , hashed_pass FROM admins WHERE admin_username = $1';
+      let res = await client.query(sql, [username]);
+      let data = res.rows[0];
+      if (!data) return false;
+      let { salt, hashed_pass } = data;
+      return hash.compareHash(password, hashed_pass, salt);
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
 }
 
 module.exports = Admin;
