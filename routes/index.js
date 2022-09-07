@@ -3,6 +3,7 @@ const authRouter = require('./auth');
 const usersRouter = require('./users');
 const productsRouter = require('./products');
 const categoriesRouter = require('./categories');
+const adminsPanelRouter = require('./adminsPanel');
 const checkAuth = require('../middlewares/checkAuth');
 const md2html = require('../utils/md2html');
 // views routes
@@ -24,5 +25,6 @@ router.use('/', authRouter);
 router.use('/user', checkAuth, usersRouter);
 router.use('/products', productsRouter);
 router.use('/categories', categoriesRouter);
+router.use('/admins-panel', adminsPanelRouter);
 
 module.exports = router;

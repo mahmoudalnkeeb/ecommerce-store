@@ -7,5 +7,6 @@ module.exports = env = {
   SALT_ROUNDS: process.env.SALT_ROUNDS,
   DB_URL: dbUrl,
   JWT_SECRET: process.env.JWT_SECRET,
-  DEV_SECRET: process.env.DEV_SECRET
+  DEV_SECRET: process.env.DEV_SECRET,
+  MODERATOR_SECRET: process.env.MODERATOR_SECRET,
 };

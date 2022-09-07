@@ -9,6 +9,28 @@ const auths = new Auth(pool);
 const tokens = new Token(jwt, JWT_SECRET);
 
 module.exports = class UserController {
+  // validation
+  async checkUsername(req, res, next) {
+    try {
+      let { username } = req.params;
+      let isValid = await users.usernameIsValid(username);
+      if (isValid) return res.json({ availble: true });
+      res.json({ availble: false });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async checkEmail(req, res, next) {
+    try {
+      let { email } = req.params;
+      let isValid = await users.emailIsValid(email);
+      if (isValid) return res.json({ availble: true });
+      res.json({ availble: false });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   // [profile] get user data by id for profile only user can get his data
   async getById(req, res, next) {
     try {

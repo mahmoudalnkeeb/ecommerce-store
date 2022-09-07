@@ -6,6 +6,7 @@ module.exports = {
     if (!firstname) nulls.push('firstname');
     if (!lastname) nulls.push('firstname');
     if (!username) nulls.push('firstname');
+    if (!email) nulls.push('email');
     if (!password) nulls.push('firstname');
     if (!checkPass(password)) invalid.push('password');
     if (email) {
@@ -44,7 +45,9 @@ function checkEmail(email) {
   return true;
 }
 function checkPass(pass) {
-  const passReg = RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/);
+  const passReg = RegExp(
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+  );
   if (!passReg.test(pass)) return false;
   return true;
 }

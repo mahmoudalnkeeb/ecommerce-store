@@ -1,6 +1,6 @@
 const format = require('pg-format');
 const { productsPagination } = require('../utils/pagination');
-module.exports = class Product {
+class Product {
   constructor(pool) {
     this.pool = pool;
   }
@@ -9,7 +9,7 @@ module.exports = class Product {
   async getProducts(sortBy = 'recent', page = 1) {
     let client = await this.pool.connect();
     try {
-      let { offset, sql } = pagination(sortBy, parseInt(page));
+      let { offset, sql } = productsPagination(sortBy, parseInt(page));
       let res = await client.query(sql, [offset]);
       return res.rows;
     } catch (error) {
@@ -160,4 +160,5 @@ module.exports = class Product {
       client.release();
     }
   }
-};
+}
+module.exports = Product;

@@ -74,6 +74,35 @@ module.exports = class User {
     }
   }
 
+  // check data availbility
+
+  async usernameIsValid(username) {
+    let client = await this.pool.connect();
+    try {
+      let sql = 'SELECT username FROM users WHERE username = $1';
+      let res = await client.query(sql, [username]);
+      if (res.rows.length === 0) return true;
+      return false;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+  async emailIsValid(email) {
+    let client = await this.pool.connect();
+    try {
+      let sql = 'SELECT email FROM users WHERE email = $1';
+      let res = await client.query(sql, [email]);
+      if (res.rows.length === 0) return true;
+      return false;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
   // delete user account return void
   async deleteUser(userId) {
     let client = await this.pool.connect();

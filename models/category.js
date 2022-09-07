@@ -35,9 +35,10 @@ class Category {
   async create({ catName, catImage, catDesc }) {
     let client = await this.pool.connect();
     try {
-      let sql = '';
+      let sql =
+        'INSERT INTO categories(cat_name , cat_image , cat_desc) VALUES($1 , $2 , $3) RETURNING cat_name';
       let res = await client.query(sql, [catName, catImage, catDesc]);
-      return res.rows[0];
+      return res.rows[0]?.cat_name;
     } catch (error) {
       throw error;
     } finally {

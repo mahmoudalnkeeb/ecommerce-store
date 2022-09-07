@@ -1,15 +1,18 @@
 const CategoryController = require('../controllers/category.controller');
+const AdminsPanelController = require('../controllers/adminsController/adminPanelController');
+const checkAdmin = require('../middlewares/checkAdmin');
 const categoriesController = new CategoryController();
+const adminsPanelController = new AdminsPanelController();
 const router = require('express').Router();
 
 router.get('/', categoriesController.getCategories);
 router.get('/:catName', categoriesController.getByName);
 
-// [ONLY ADMIN ROUTES]
+// [ ADMIN PANEL ROUTES]
 
-router.post('/', categoriesController.create);
-router.post('/multi');
-router.put('/', categoriesController.update);
-router.delete('/', categoriesController.delete);
+router.post('/', checkAdmin, adminsPanelController.createCategory);
+// router.post('/multi', checkAdmin); TODO
+router.put('/', checkAdmin, adminsPanelController.updateCategory);
+router.delete('/', checkAdmin, adminsPanelController.deleteCategory);
 
 module.exports = router;

@@ -1,15 +1,18 @@
 const ProductController = require('../controllers/product.controller');
+const AdminsPanelController = require('../controllers/adminsController/adminPanelController');
+const checkAdmin = require('../middlewares/checkAdmin');
 const productsController = new ProductController();
+const adminsPanelController = new AdminsPanelController();
 const router = require('express').Router();
 
 router.get('/', productsController.getProducts);
 router.get('/:productId', productsController.getProductById);
 
-// [ONLY ADMIN ROUTES]
+// [ADMIN PANEL ROUTES]
 
-router.post('/', productsController.addProduct);
-router.post('/multi', productsController.addProducts);
-router.put('/', productsController.updateProduct);
-router.delete('/', productsController.deleteProduct);
+router.post('/', checkAdmin, adminsPanelController.addProduct);
+// router.post('/multi', checkAdmin, adminsPanelController.addProducts); TODO
+router.put('/', checkAdmin, adminsPanelController.updateProduct);
+router.delete('/', checkAdmin, adminsPanelController.deleteProduct);
 
 module.exports = router;

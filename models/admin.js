@@ -12,8 +12,8 @@ class Admin {
   async create({ adminFullname, adminUsername, adminPassword, adminEmail }) {
     let client = await this.pool.connect();
     try {
-      let sql = `INSERT INTO admins(admin_id , admin_fullname , admin_username , admin_email , hashed_pass , salt )
-                 VALUES($1 , $2 , $3 , $4 , $5 , $6 , $7)
+      let sql = `INSERT INTO admins(admin_id , admin_fullname , admin_username , email , hashed_pass , salt )
+                 VALUES($1 , $2 , $3 , $4 , $5 , $6)
                  RETURNING admin_id
                 `;
       let adminId = generateId();
@@ -55,7 +55,7 @@ class Admin {
     try {
       let sql = 'SELECT access_token FROM admins WHERE admin_id = $1';
       let res = await client.query(sql, [adminId]);
-      return res.rows[0].admin_id;
+      return res.rows[0].access_token;
     } catch (error) {
       throw error;
     } finally {
@@ -68,8 +68,7 @@ class Admin {
     try {
       let sql =
         'UPDATE admins SET access_token = $1 WHERE admin_id = $2 RETURNING access_token';
-      let res = await client.query(sql, [newAccessToken, adminId]);
-      return res.rows[0].access_token;
+      await client.query(sql, [newAccessToken, adminId]);
     } catch (error) {
       throw error;
     } finally {

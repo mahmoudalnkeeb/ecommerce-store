@@ -21,39 +21,5 @@ class CategoryController {
       next(error);
     }
   }
-
-  // [ONLY ADMINS CONTROLLERS]
-  async create(req, res, next) {
-    try {
-      let { catName, catImage, catDesc } = req.body;
-      let category = await categories.create({ catName, catImage, catDesc });
-      res.status(201).json(category);
-    } catch (error) {
-      next(error);
-    }
-  }
-  async update(req, res, next) {
-    try {
-      let { catName, catImage, catDesc, catId } = req.body;
-      let newCat = await categories.update({
-        catName,
-        catImage,
-        catDesc,
-        catId,
-      });
-      res.status(200).json(newCat);
-    } catch (error) {
-      next(error);
-    }
-  }
-  async delete(req, res, next) {
-    try {
-      let { catId } = req.body;
-      await categories.delete(catId);
-      res.status(204).json({ msg: 'deleted' });
-    } catch (error) {
-      next(error);
-    }
-  }
 }
 module.exports = CategoryController;
