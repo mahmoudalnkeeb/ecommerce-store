@@ -220,6 +220,10 @@
           }
         )
 
+<br>
+
+<br>
+
 ## categories
 
 ### get all categories
@@ -227,7 +231,7 @@
         fetch('/categories')
 
         response = categories array
-          
+
           [{
             cat_id:'',
             cat_name:'',
@@ -247,6 +251,10 @@
             cat_desc:''
           }
 
+<br>
+
+<br>
+
 ## products
 
 ### get products
@@ -261,7 +269,6 @@
 
       response = array of 20 product
 
-
 ## get specific product [product page]
 
     fetch('/products/:productId)
@@ -270,8 +277,8 @@
 
     productId = product unique id
 
-    response = product object 
-      
+    response = product object
+
       {
         productId,
         productName,
@@ -280,4 +287,3 @@
         productImages,
         productCategory,
       }
-
