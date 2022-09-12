@@ -1,6 +1,6 @@
 const pool = require('../configs/db');
 const Product = require('../models/product');
-const generateId = require('../utils/id');
+
 
 const products = new Product(pool);
 

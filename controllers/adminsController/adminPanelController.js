@@ -9,6 +9,7 @@ const tokens = new Token(jwt, JWT_SECRET);
 const admins = new Admin(pool);
 const products = new Product(pool);
 const categories = new Category(pool);
+const generateId = require('../../utils/id');
 
 class AdminsPanelController {
   // [ADMINS AUTH METHODS]

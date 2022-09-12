@@ -5,7 +5,7 @@ const productsController = new ProductController();
 const adminsPanelController = new AdminsPanelController();
 const router = require('express').Router();
 
-router.get('/', productsController.getProducts);
+router.get('/f', productsController.getProducts);
 router.get('/:productId', productsController.getProductById);
 
 // [ADMIN PANEL ROUTES]

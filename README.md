@@ -219,3 +219,65 @@
             "authorization":"access_token goes here"
           }
         )
+
+## categories
+
+### get all categories
+
+        fetch('/categories')
+
+        response = categories array
+          
+          [{
+            cat_id:'',
+            cat_name:'',
+            cat_image:'',
+            cat_desc:''
+          }]
+
+### get category by name
+
+        fetch('/categories/:catName')
+
+        response = category object
+          {
+            cat_id:'',
+            cat_name:'',
+            cat_image:'',
+            cat_desc:''
+          }
+
+## products
+
+### get products
+
+      fetch('/products/f)
+
+      query string:
+
+     [1] sort = 'recent' || 'oldest' || 'oldest' || 'lowest_price'
+
+     [2] page = 1 => the number of page
+
+      response = array of 20 product
+
+
+## get specific product [product page]
+
+    fetch('/products/:productId)
+
+    parameters:
+
+    productId = product unique id
+
+    response = product object 
+      
+      {
+        productId,
+        productName,
+        productPrice,
+        productDesc,
+        productImages,
+        productCategory,
+      }
+
