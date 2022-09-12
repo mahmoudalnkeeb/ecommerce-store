@@ -1,6 +1,6 @@
 # store api docs
 
-## [auth](#auth-1)
+### [auth](#auth-1)
 
 - [signup](#signup)
 
@@ -10,13 +10,25 @@
 
 - [logout](#logout)
 
-## [users](#users-1)
+### [users](#users-1)
 
 - [get by id](#getbyid)
 
 - [update user data](#update-user-data)
 
 - [update user password](#update-user-password)
+
+### [categories](#categories-1)
+
+- [get all categories](#get-all-categories)
+
+- [get category by name](#get-category-by-name)
+
+### [products](#products-1)
+
+- [get all products](#get-products)
+
+- [get specific product](#get-specific-product-product-page)
 
 <br>
 <br>
