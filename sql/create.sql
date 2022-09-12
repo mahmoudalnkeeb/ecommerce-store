@@ -98,3 +98,16 @@ CREATE TABLE IF NOT EXISTS coupons(
     SET
         NULL ON UPDATE CASCADE
 );
+
+-- orders 
+CREATE TABLE IF NOT EXISTS orders(
+    order_id SERIAL PRIMARY KEY,
+    quantity INTEGER NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    user_id VARCHAR(64) REFERENCES users(user_id) ON DELETE
+    SET
+        NULL ON UPDATE CASCADE,
+        product_id VARCHAR(64) REFERENCES products(product_id) ON DELETE
+    SET
+        NULL ON UPDATE CASCADE,
+);

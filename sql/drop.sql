@@ -24,3 +24,6 @@ DROP TABLE IF EXISTS discounts CASCADE;
 
 -- drop coupons table
 DROP TABLE IF EXISTS coupons CASCADE;
+
+-- drop orders table
+DROP TABLE IF EXISTS orders CASCADE;

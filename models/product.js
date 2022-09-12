@@ -64,6 +64,19 @@ class Product {
     }
   }
 
+  async getPrice(productId) {
+    let client = await this.pool.connect();
+    try {
+      let sql = 'SELECT product_price FROM products WHERE product_id = $1';
+      let res = await client.query(sql, [productId]);
+      return res.rows[0];
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
   // add single product [ONLY ADMINS]
   async addProduct({
     productId,
