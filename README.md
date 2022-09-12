@@ -30,6 +30,12 @@
 
 - [get specific product](#get-specific-product-product-page)
 
+### [misc](#misc-1)
+
+- [validation](#username-validation--email-validation)
+
+- [upload](#upload)
+
 <br>
 <br>
 <br>
@@ -271,7 +277,7 @@
 
 ### get products
 
-      fetch('/products/f)
+      fetch('/products/f')
 
       query string:
 
@@ -283,7 +289,7 @@
 
 ## get specific product [product page]
 
-    fetch('/products/:productId)
+    fetch('/products/:productId')
 
     parameters:
 
@@ -299,3 +305,33 @@
         productImages,
         productCategory,
       }
+
+<br>
+
+<br>
+
+## misc
+
+### username validation & email validation
+
+    username => fetch('/user/check-username/:username')
+
+    email => fetch('/user/check-email/:email')
+
+    response => {available : boolean}
+
+### upload
+
+    use multipart/formdata to send post request
+
+    '/upload'
+
+    method : POST
+
+    request body
+
+    {
+      asset : file(image)
+    }
+
+    asset can be any kind of images image/jpeg , image/png etc..  it will be uploaded and respond with url
