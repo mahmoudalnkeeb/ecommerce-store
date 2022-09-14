@@ -6,7 +6,7 @@ const adminsPanelController = new AdminsPanelController();
 const router = require('express').Router();
 
 router.get('/', categoriesController.getCategories);
-router.get('/:catName', categoriesController.getByName);
+// router.get('/:catName', categoriesController.getByName); FIXING
 
 // [ ADMIN PANEL ROUTES]
 

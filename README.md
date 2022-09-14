@@ -259,15 +259,7 @@
 
 ### get category by name
 
-        fetch('/categories/:catName')
-
-        response = category object
-          {
-            cat_id:'',
-            cat_name:'',
-            cat_image:'',
-            cat_desc:''
-          }
+  **NOT WORKING**
 
 <br>
 

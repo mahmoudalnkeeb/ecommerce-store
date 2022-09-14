@@ -18,13 +18,32 @@ class Order {
     }
   }
 
+  async getTotalPrice(user_id) {
+    let client = await this.pool.connect();
+    try {
+      let sql = 'SELECT COUNT(price) FROM orders WHERE user_id = $1';
+      let res = await client.query(sql, [user_id]);
+      return res.rows[0];
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
   async createOrder({ price, quantity, product_id, user_id }) {
     let client = await this.pool.connect();
     try {
-      let sql = `INSERT INTO orders(price , quantity , product_id , user_id)
-                 VALUES($1 , $2 , $3 , $4) 
-                 RETURNING order_id , price , quantity , product_id , user_id;`;
-      let res = await client.query(sql, [price, quantity, product_id, user_id]);
+      let sql = `INSERT INTO orders(price , quantity , product_id , order_status , user_id)
+                 VALUES($1 , $2 , $3 , $4 , $5) 
+                 RETURNING order_id , price , quantity , product_id , user_id ,order_status;`;
+      let res = await client.query(sql, [
+        price,
+        quantity,
+        product_id,
+        'active',
+        user_id,
+      ]);
       return res.rows[0];
     } catch (error) {
       throw error;

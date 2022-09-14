@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS products(
     product_price INTEGER NOT NULL,
     product_desc TEXT NOT NULL,
     product_images VARCHAR [],
-    product_category INTEGER REFERENCES categories(cat_id) ON DELETE
+    product_category VARCHAR(64) REFERENCES categories(cat_name) ON DELETE
     SET
         NULL ON UPDATE CASCADE,
         created_at TIMESTAMP NOT NULL DEFAULT NOW()
@@ -93,21 +93,19 @@ CREATE TABLE IF NOT EXISTS discounts(
 CREATE TABLE IF NOT EXISTS coupons(
     coupon_id SERIAL PRIMARY KEY,
     coupon_code VARCHAR(32) NOT NULL UNIQUE,
-    discount_value DOUBLE PRECISION NOT NULL DEFAULT 0.0,
-    product_id VARCHAR(64) REFERENCES products(product_id) ON DELETE
-    SET
-        NULL ON UPDATE CASCADE
+    discount_value DOUBLE PRECISION NOT NULL DEFAULT 0.0
 );
 
 -- orders 
 CREATE TABLE IF NOT EXISTS orders(
     order_id SERIAL PRIMARY KEY,
     quantity INTEGER NOT NULL,
+    order_status VARCHAR(16) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     user_id VARCHAR(64) REFERENCES users(user_id) ON DELETE
     SET
         NULL ON UPDATE CASCADE,
         product_id VARCHAR(64) REFERENCES products(product_id) ON DELETE
     SET
-        NULL ON UPDATE CASCADE,
+        NULL ON UPDATE CASCADE
 );

@@ -13,6 +13,16 @@ const orders = new Order(pool);
 */
 
 class OrderController {
+  async getTotalPrice(req, res, next) {
+    try {
+      let user_id = req.userId;
+      let totalPrice = await orders.getTotalPrice(user_id);
+      res.status(200).json(totalPrice);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async createOrder(req, res, next) {
     try {
       let { quantity, product_id } = req.body;
@@ -60,7 +70,7 @@ class OrderController {
       let price = (await products.getPrice(product_id)) * quantity;
       let checkIsOwned = await orders.owenershipVerfiy(order_id, user_id);
       if (!checkIsOwned) return res.status(403).send('Forbidden');
-      let updatedOrder = await orders.updateOrder(order_id, quantity , price);
+      let updatedOrder = await orders.updateOrder(order_id, quantity, price);
       res.status(200).json(updatedOrder);
     } catch (error) {
       next(error);

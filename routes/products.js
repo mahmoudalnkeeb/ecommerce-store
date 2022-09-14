@@ -7,6 +7,7 @@ const router = require('express').Router();
 
 router.get('/f', productsController.getProducts);
 router.get('/:productId', productsController.getProductById);
+// todo get products with filters
 
 // [ADMIN PANEL ROUTES]
 
